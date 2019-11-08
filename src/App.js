@@ -14,6 +14,8 @@ function App() {
     let posEnd;
     let pos1 = 0;
     let pos2 = 0;
+    let posX = 0;
+    let posLeft=0;
     let slideLength = aaa.length;
     let firSlide = aaa[0];
     let lastSlide = aaa[slideLength - 1];
@@ -31,8 +33,9 @@ function App() {
       e = e || window.event;
       e.preventDefault();
       if (e.type === 'touchstart') {
-        posIni = draga.offsetLeft;
+        posIni = e.touches[0].clientX;
         pos2 = e.touches[0].clientX;
+        posLeft = draga.offsetLeft;
       }
       console.log('posIni '+posIni)
     }
@@ -43,36 +46,36 @@ function App() {
         pos1 = pos2 - e.touches[0].clientX;
         pos2 = e.touches[0].clientX;
         // console.log(draga.offsetLeft)
-          if(draga.offsetLeft < -600){
-            draga.style.left = -600+'px';
-          }else if(draga.offsetLeft>0){
-            draga.style.left = 0+'px'; 
-          }
       } else {
         console.log('error e.type undefined')
       }
+      posEnd = e.touches[0].clientX
       draga.style.left = (draga.offsetLeft - pos1) + 'px';
     }
     /* drag para a direita POSEND fica menor que POSINI*/
     /* drag para esquerda POSEND fica maior que POSINI */
-    function dragEnd(e) {
-      posEnd = pos2;
-      let threshold = draga.offsetLeft;
-      /* defindo o valor para locomoção do slide*/
-      let indice = draga.offsetLeft;
-      console.log('indice: '+indice)
-      console.log('offsetleft '+threshold)
-      console.log('pos1 '+pos1);
-      console.log('pos2 '+pos2);
-      console.log('posEnd '+posEnd)
-      console.log('Threshold '+threshold)
-      if(posEnd <= (posIni+150)){
-        draga.style.left=-300+'px';
-      }else if(!draga){
-
+    function dragEnd(){
+      if(posEnd>(posIni+50)){
+        posX = posX+300;
+        draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
+          console.log('1--- '+posX)
+        }else if(posEnd<(posIni-50)){
+        posX = posX - (300);     
+        draga.offsetLeft < -600 ? draga.style.left = -600+'px' : draga.style.left = posX+'px';
+        console.log('2')  
       }else{
-        draga.style.left = (posIni)+'px'
+        
       }
+
+
+      // if(draga.offsetLeft < -600){
+      //   draga.style.left = -600+'px';
+      // }else if(draga.offsetLeft>0){
+      //   draga.style.left = 0+'px';
+      // }
+
+
+
     }
   }
 
