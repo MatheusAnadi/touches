@@ -22,9 +22,9 @@ function App() {
     let cloneFirst = firSlide.cloneNode(true);
     let cloneLast = lastSlide.cloneNode(true);
     const draga = drag.current;
+    const divWidth = drag.current.offsetWidth/3;
 
-
-
+    //Eventos
     draga.addEventListener('touchstart', dragStart);
     draga.addEventListener('touchend', dragEnd);
     draga.addEventListener('touchmove', dragMove);
@@ -56,26 +56,21 @@ function App() {
     /* drag para esquerda POSEND fica maior que POSINI */
     function dragEnd(){
       if(posEnd>(posIni+50)){
-        posX = posX+300;
-        draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
-          console.log('1--- '+posX)
+        posX = posX+divWidth;
+        // draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
+        if(draga.offsetLeft > 0){
+          draga.style.left = 0+'px'
+          posX = 0;
+        }else{
+          posX >= 600 ? posX=600 :draga.style.left = posX+'px';
+        }
+        console.log('1--- '+posX)
         }else if(posEnd<(posIni-50)){
-        posX = posX - (300);     
-        draga.offsetLeft < -600 ? draga.style.left = -600+'px' : draga.style.left = posX+'px';
-        console.log('2')  
-      }else{
+        posX = posX - divWidth;     
+        draga.offsetLeft <= -600 ? draga.style.left = -600+'px' : draga.style.left = posX+'px';
+        console.log('2-----'+posX);
         
       }
-
-
-      // if(draga.offsetLeft < -600){
-      //   draga.style.left = -600+'px';
-      // }else if(draga.offsetLeft>0){
-      //   draga.style.left = 0+'px';
-      // }
-
-
-
     }
   }
 
