@@ -3,7 +3,6 @@ import './App.css';
 
 function App() {
   const drag = useRef(null);
-  const aaa = document.getElementsByClassName('item');
   useEffect(() => {
     click();
   });
@@ -15,12 +14,6 @@ function App() {
     let pos1 = 0;
     let pos2 = 0;
     let posX = 0;
-    let posLeft=0;
-    let slideLength = aaa.length;
-    let firSlide = aaa[0];
-    let lastSlide = aaa[slideLength - 1];
-    let cloneFirst = firSlide.cloneNode(true);
-    let cloneLast = lastSlide.cloneNode(true);
     const draga = drag.current;
     const divWidth = drag.current.offsetWidth/3;
 
@@ -35,7 +28,6 @@ function App() {
       if (e.type === 'touchstart') {
         posIni = e.touches[0].clientX;
         pos2 = e.touches[0].clientX;
-        posLeft = draga.offsetLeft;
       }
       console.log('posIni '+posIni)
     }
@@ -56,34 +48,33 @@ function App() {
     /* drag para esquerda POSEND fica maior que POSINI */
     function dragEnd(){
       if(posEnd>(posIni+50)){
-        posX = posX+divWidth;
-        // draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
-        if(draga.offsetLeft > 0){
-          draga.style.left = 0+'px'
-          posX = 0;
-        }else{
-          posX >= 600 ? posX=600 :draga.style.left = posX+'px';
-        }
+          posX = posX+divWidth;
+          // draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
+          if(draga.offsetLeft > 0){
+            draga.style.left = 0+'px'
+            posX = 0;
+          }else{
+            posX >= 600 ? posX=600 :draga.style.left = posX+'px';
+          }
         console.log('1--- '+posX)
         }else if(posEnd<(posIni-50)){
-        posX = posX - divWidth;     
-        draga.offsetLeft <= -600 ? draga.style.left = -600+'px' : draga.style.left = posX+'px';
-        console.log('2-----'+posX);
-        
-      }
+          posX = posX - divWidth;     
+          posX <= -600 ? posX = -600 : console.log('n e menor n krai');
+          draga.offsetLeft <= -600 ? draga.style.left = -600+'px' : draga.style.left = posX+'px';          
+        }
     }
   }
 
 
-
+  const Array = ['Log 1','Log 2','Log 3'];
 
   return (
     <div className="App">
       <div className="wrap">
         <div className="obj" ref={drag}>
-          <div className="item">1</div>
-          <div className="item">2</div>
-          <div className="item">3</div>
+          {Array.map(item => {
+            return <div className="item">{item}</div> 
+          })}
         </div>
       </div>
       <button id="tll">testando</button>
