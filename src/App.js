@@ -50,46 +50,21 @@ function App() {
     }   
 
 
-
-// if(posEnd>(posIni+50)){
-//   posX = posX+divWidth;
-//   if(draga.offsetLeft > 0){
-//     draga.style.left = 0+'px'
-//     posX = 0;
-//   }else{
-//     posX >= (divWidth*4) ? posX=(divWidth*4) : draga.style.left = posX+'px';
-//   }
-//   console.log('1--- '+posX)
-// }else if(posEnd<(posIni-50)){
-//   posX = posX - divWidth;   
-//   console.log('2 ---'+posX)  
-//   if(draga.offsetLeft < -(divWidth*5)){
-//     draga.style.left = -(divWidth*5)+'px'
-//   }else{
-//     posX <= -(divWidth*5) ? posX= -(divWidth*5) : draga.style.left = posX+'px'
-//   }
-// }  
-
-
     function dragEnd(){
-      
       if(posEnd>(posIni+50)){
-        posX = posX+divWidth;
-        console.log(posX)
         if(draga.offsetLeft>0){
           draga.style.left = '0px';
         }else{
-          posX > -(divWidth*4) ? posX = -(divWidth*4) : draga.style.left = posX+'px';
-          console.log(posX)
+          posX = posX+divWidth;
+          posX < -(divWidth*4) ? posX = -(divWidth*4) : draga.style.left = posX+'px';
         }
       }else if(posEnd<(posIni-50)){
-        posX = posX-divWidth;
         if(draga.offsetLeft< -(divWidth*4)){
           draga.style.left = -(divWidth*4)+'px';
         }else{
-
+          posX = posX-divWidth;
+          posX > (divWidth*4) ? posX = (divWidth*4) : draga.style.left = posX+'px';
         }
-
       }
 
 
