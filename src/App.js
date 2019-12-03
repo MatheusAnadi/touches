@@ -1,27 +1,26 @@
 import React, { useRef, useEffect } from 'react';
-import './App.css';
+import { Container, Wrap, Obj, Item } from './style'
 
 function App() {
+  const wrap = useRef(null);
   const drag = useRef(null);
-  const dd = useRef(null);
   const items = document.getElementsByClassName('item');
   useEffect(() => {
+    drag.current.style.width = (wrap.current.offsetWidth*items.length)+'px';  
+    for(let i=0; i<items.length; ++i){
+      items.item(i).style.width = wrap.current.offsetWidth+'px';
+    }
     click();
   });
-
-
   function click() {
     let posIni;
     let posEnd;
     let pos1 = 0;
     let pos2 = 0;
     let posX = 0;
-    const draga = drag.current;
-    const divWidth = dd.current.offsetWidth;
-    const teste = dd.current;
-    const tam = items.length;
-    let maxDivWidth = divWidth*tam
-    console.log(maxDivWidth);
+    const draga =  drag.current;
+    const divWidth = wrap.current.offsetWidth;   
+    console.log(divWidth)
     //Eventos
     draga.addEventListener('touchstart', dragStart);
     draga.addEventListener('touchend', dragEnd);
@@ -34,7 +33,7 @@ function App() {
         posIni = e.touches[0].clientX;
         pos2 = e.touches[0].clientX;
       }
-      console.log('posIni '+posIni)
+      // console.log('posIni '+posIni)
     }
     function dragMove(e) {
       e = e || window.event;
@@ -46,28 +45,43 @@ function App() {
       } else {
         console.log('error e.type undefined')
       }
-      posEnd = e.touches[0].clientX
+      posEnd = e.touches[0].clientX;
       draga.style.left = (draga.offsetLeft - pos1) + 'px';
-    }
-    /* drag para a direita POSEND fica menor que POSINI*/
-    /* drag para esquerda POSEND fica maior que POSINI */
+    }   
+
+
+
+// if(posEnd>(posIni+50)){
+//   posX = posX+divWidth;
+//   if(draga.offsetLeft > 0){
+//     draga.style.left = 0+'px'
+//     posX = 0;
+//   }else{
+//     posX >= (divWidth*4) ? posX=(divWidth*4) : draga.style.left = posX+'px';
+//   }
+//   console.log('1--- '+posX)
+// }else if(posEnd<(posIni-50)){
+//   posX = posX - divWidth;   
+//   console.log('2 ---'+posX)  
+//   if(draga.offsetLeft < -(divWidth*5)){
+//     draga.style.left = -(divWidth*5)+'px'
+//   }else{
+//     posX <= -(divWidth*5) ? posX= -(divWidth*5) : draga.style.left = posX+'px'
+//   }
+// }  
+
+
     function dragEnd(){
       if(posEnd>(posIni+50)){
-          posX = posX+divWidth;
-          // draga.offsetLeft > 0 ? draga.style.left = 0+'px' : draga.style.left = posX+'px';
-          if(draga.offsetLeft > 0){
-            draga.style.left = 0+'px'
-            posX = 0;
-          }else{
-            posX >= (divWidth*2) ? posX=(divWidth*2) :draga.style.left = posX+'px';
-          }
-        console.log('1--- '+posX)
-        }else if(posEnd<(posIni-50)){
-          posX = posX - divWidth;     
-          posX <= -(divWidth*2) ? posX = -(divWidth*2) : console.log('n e menor n krai');
-          draga.offsetLeft <= -(divWidth*2) ? draga.style.left = -(divWidth*2)+'px' : draga.style.left = posX+'px';          
-          draga.style.WebkitTransition = 'all 1s';
-        }
+        console.log('1')
+      }else if(posEnd<(posIni-50)){
+        console.log('2')
+      }
+
+
+
+
+      draga.style.WebkitTransition = 'all 1s';
     }
   }
 
@@ -75,16 +89,19 @@ function App() {
   const Array = ['Log 1','Log 2','Log 3','Log 4','Log 5'];
 
   return (
-    <div className="App">
-      <div className="wrap">
-        <div className="obj" ref={drag}>
-          {Array.map(item => {
-            return <div ref={dd} className="item">{item}</div> 
-          })}
-        </div>
-      </div>
+    <div>
+      <Container>
+        <Wrap ref={wrap}>
+          <Obj ref={drag}>
+            {Array.map(item => {
+              return <Item className="item">{item}</Item> 
+            })}
+          </Obj>
+        </Wrap>
+      </Container>
     </div>
   );
 }
 
 export default App;
+
