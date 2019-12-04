@@ -45,32 +45,30 @@ function App() {
       } else {
         console.log('error e.type undefined')
       }
-      posEnd = e.touches[0].clientX;
       draga.style.left = (draga.offsetLeft - pos1) + 'px';
     }   
 
 
     function dragEnd(){
-      if(posEnd>(posIni+50)){
+      posEnd = pos2;
+      if(posEnd>(posIni+50)){  
         if(draga.offsetLeft>0){
           draga.style.left = '0px';
         }else{
           posX = posX+divWidth;
-          posX < -(divWidth*4) ? posX = -(divWidth*4) : draga.style.left = posX+'px';
+          posX < -(divWidth*(items.length-1)) ? posX = -(divWidth*(items.length-1)) : draga.style.left = posX+'px';
+          console.log(posX)
         }
       }else if(posEnd<(posIni-50)){
-        if(draga.offsetLeft< -(divWidth*4)){
-          draga.style.left = -(divWidth*4)+'px';
+        if(draga.offsetLeft< -(divWidth*(items.length-1))){
+          draga.style.left = -(divWidth*(items.length-1))+'px';
         }else{
           posX = posX-divWidth;
-          posX > (divWidth*4) ? posX = (divWidth*4) : draga.style.left = posX+'px';
+          posX > (divWidth*(items.length-1)) ? posX = (divWidth*(items.length-1)) : draga.style.left = posX+'px';
+          console.log(posX)
         }
       }
-
-
-
-
-      // draga.style.WebkitTransition = 'all 1s';
+      draga.style.WebkitTransition = 'all 1s';
     }
   }
 
