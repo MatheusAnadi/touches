@@ -24,6 +24,13 @@ export const Obj = styled.div`
 export const Item = styled.div`
     height: 100%;
     transition: all 1s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    h1{
+        font-size:24px;
+        color:#484848;
+    }
     &:nth-child(1){
         background: yellow;
     }
